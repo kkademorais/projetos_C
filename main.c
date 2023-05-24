@@ -1,38 +1,39 @@
 /*Nome: Kaike de Morais Carvalho
 Matéria: Lab APC I
-Programa: Desenvolva um programa que calcule o Fatorial de um número usando a estrutura FOR*/
+Programa: Desenvolva um programa que calcule o Fatorial de um número usando a estrutura WHILE*/
 
-//Incluir biblioteca de Entrada e Saída Padrão do C e a biblioteca para incluir acentos da língua portuguesa
+//Incluir biblioteca de Entrada e Saída Padrão do C e a biblioteca para acentos da Língua Portuguesa
 #include <stdio.h>
 #include <locale.h>
 
 main()
 {
-    //Setar a língua portuguesa para possibilitar a escrita do código com acentos
+    /*Setar o locale para que seja possível a escrita do código com acentos
+    Declaração da variável num que receberá o input do usuário
+    Declaração da variável fatorial para que seja realizado o cálculo de fatorial*/
     setlocale(LC_ALL, "Portuguese");
+    int num;
+    int fatorial = 1;
 
-    /*Declarar a classe e o nome das variáveis
-    num = variável para receber o input do usuário
-    fatorial = variável para calcular fatorial*/
-    int num, fatorial;
-
-    /*Printar para o usuário digitar um número
-    Input do usuário é armazenado na variável num*/
-    printf("Bem-vindo à calculadora de Fatorial!! \n");
-    printf("Digite um número que deseja calcular: \n");
+    /*Printar para que o usuário digite um número a ser calculado
+    Input do usuário é atribuído na variável num*/
+    printf("Calculadora de Fatorial em C!! \n");
+    printf("Insira um número que deseja calcular: \n");
     scanf("%i", &num);
 
-    /*Loop de FOR: Inicial; Final; Incremento
-    Inicial: Inicia setando o fatorial a 1
-    Final: Finaliza o loop quando num for igual ou menor que 1
-    Incremento: O num vai subtraindo 1 conforme o loop vai rodando*/
-    for (fatorial = 1; num > 1; num = num -1)
-
-        /*Dentro do loop, o fatorial (1) vai multiplicar o num e receberá o mesmo valor que o usuário inseriu
-        Conforme o loop for rodando, o fatorial vai sendo multiplicado com o antecessor de num (num-1), até que num seja 1
-        No fim do loop, o resultado do fatorial é mostrado*/
+    /*While: (Condição final)
+    While vai ser executado enquanto o num é igual a 1*/
+    while (num > 1)
+    {
+        /*Dentro do while:
+        Fatorial (1) é multiplicado e recebe o mesmo valor inserido pelo usuário
+        O num é subtraido por 1 até que seja igual a 1 e assim acabe o loop
+        O fatorial vai sendo multiplicado pelo antecessor de num até o fim do loop*/
         fatorial = fatorial * num;
-        printf("O fatorial do seu número é %i!! \n", fatorial);
+        num = num - 1;
+    }
+    //Printar o resultado do fatorial
+    printf("O fatorial do seu número é %i!! \n", fatorial);
 
     return 0;
 }
