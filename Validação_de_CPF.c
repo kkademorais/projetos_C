@@ -1,28 +1,28 @@
 #include <stdio.h>
-#include <locale.h> //Biblioteca para escrever acentos e grafias da lÌngua portuguesa na tela
-#include <ctype.h> //Biblioteca para manipulaÁ„o de caracteres -> Retira caracteres n„o numÈricos (isdigit)
-#include <string.h> //Biblioteca para an·lise de string -> Verificar tamanho da string (strlen)
+#include <locale.h> //Biblioteca para escrever acentos e grafias da l√≠ngua portuguesa na tela
+#include <ctype.h> //Biblioteca para manipula√ß√£o de caracteres -> Retira caracteres n√£o num√©ricos (isdigit)
+#include <string.h> //Biblioteca para an√°lise de string -> Verificar tamanho da string (strlen)
 
 
-    //FunÁ„o para converter o valor de um caractere numÈrico para seu valor inteiro
+    //Fun√ß√£o para converter o valor de um caractere num√©rico para seu valor inteiro
     //Utiliza da tabela ASCII
-    //Subtrai o valor do caractere '0' para obter o valor do n˙mero inteiro correspondente
+    //Subtrai o valor do caractere '0' para obter o valor do n√∫mero inteiro correspondente
 int charparaint(char caractere)
 {
     return caractere - '0';
 }
 
-    //FunÁ„o para retirar os caracteres n„o n˙mericos do CPF
+    //Fun√ß√£o para retirar os caracteres n√£o n√∫mericos do CPF
 void retirarnumcpf( char cpf[15], char cpfnumerico[15])
 {
     int contagem = 0;
     int numero = 0;
 
-    //For Loop -> Vai do primeiro elemento do CPF [0] atÈ o ˙ltimo
-    //Como CPF È string, o ˙ltimo elemento È o caractere nulo ('\0') -> Ele È o flag de parada
-    //Caso o caractere seja numÈrico, ele È armazenado em outra string (cpnumerico)
-    //ApÛs o Loop, È incluido o caractere nulo para que a string (cpfnumerico) seja mantido como uma string
-    //Como a string È mantida, ela n„o vai ignorar o zero. Caso fosse tipo int, o zero no cpf seria excluido e daria erro
+    //For Loop -> Vai do primeiro elemento do CPF [0] at√© o √∫ltimo
+    //Como CPF √© string, o √∫ltimo elemento √© o caractere nulo ('\0') -> Ele √© o flag de parada
+    //Caso o caractere seja num√©rico, ele √© armazenado em outra string (cpnumerico)
+    //Ap√≥s o Loop, √© incluido o caractere nulo para que a string (cpfnumerico) seja mantido como uma string
+    //Como a string √© mantida, ela n√£o vai ignorar o zero. Caso fosse tipo int, o zero no cpf seria excluido e daria erro
 
     for(contagem = 0; cpf[contagem] != '\0'; contagem++){
         if(isdigit(cpf[contagem])){
@@ -32,25 +32,26 @@ void retirarnumcpf( char cpf[15], char cpfnumerico[15])
     cpfnumerico[numero] = '\0';
 }
 
-    //FunÁ„o para verificar se o CPF possui 11 dÌgitos
-void verificardig(char cpfnumerico[15])
+    //Fun√ß√£o para verificar se o CPF possui 11 d√≠gitos
+int verificardig(char cpfnumerico[15])
 {
     int numdig;
 
-    numdig = strlen(cpfnumerico);   //Armazena o tamanho da string em outra vari·vel, sendo essa do tipo int
+    numdig = strlen(cpfnumerico);   //Armazena o tamanho da string em outra vari√°vel, sendo essa do tipo int
 
-        //Caso o CPF (j· numÈrico) n„o tenha 11 dÌgitos, o CPF È dado como inv·lido e o programa interrompido
+        //Caso o CPF (j√° num√©rico) n√£o tenha 11 d√≠gitos, o CPF √© dado como inv√°lido e o programa interrompido
     if (numdig != 11){
-        printf("\nO CPF inserido È inv·lido!!");
+        printf("\nO CPF inserido √© inv√°lido!! \n");
         return 0;
     }
     else{
-        printf("\nVerificaÁ„o do n˙mero de dÌgitos concluÌda!");
+        printf("\nVerifica√ß√£o do n√∫mero de d√≠gitos conclu√≠da!");
+        return 1;
     }
 }
 
-    //FunÁ„o para validar o primeiro dÌgito verificador
-void verificarprimeirodig(char cpfnumerico[15])
+    //Fun√ß√£o para validar o primeiro d√≠gito verificador
+int verificarprimeirodig(char cpfnumerico[15])
 {
     int contagem;
     int fatorial = 10;
@@ -58,36 +59,37 @@ void verificarprimeirodig(char cpfnumerico[15])
     int resto = 0;
     int digitoverificador;
 
-        //For Loop para realizar a soma da fÛrmula de validaÁ„o do CPF
+        //For Loop para realizar a soma da f√≥rmula de valida√ß√£o do CPF
     for(contagem = 0; contagem < 9; contagem++){
         soma += charparaint(cpfnumerico[contagem]) * fatorial;
         fatorial--;
     }
-    printf("\nA soma total dos 9 dÌgitos deu %i", soma);
+    printf("\nA soma total dos 9 d√≠gitos deu %i", soma);
 
     resto = (soma * 10) % 11;
 
     printf("\nE o resto dessa soma deu %i", resto);
 
     if(resto == 10){
-        resto = 0; //Caso o resto de 10, tem que ser considerado como zero caso o dÌgito verificador seja zero
+        resto = 0; //Caso o resto de 10, tem que ser considerado como zero caso o d√≠gito verificador seja zero
     }
 
-    digitoverificador = charparaint(cpfnumerico[9]); //Converte o dÌgito verificador para inteiro e armazena em outra vari·vel
+    digitoverificador = charparaint(cpfnumerico[9]); //Converte o d√≠gito verificador para inteiro e armazena em outra vari√°vel
 
-        //Segue a fÛrmula de validaÁ„o
-        //caso o resto seja diferente do dÌgito verificado, È dado como CPF inv·lido e o programa interrompido
+        //Segue a f√≥rmula de valida√ß√£o
+        //caso o resto seja diferente do d√≠gito verificado, √© dado como CPF inv√°lido e o programa interrompido
     if(resto != digitoverificador){
-        printf("\nVerificaÁ„o do primeiro dÌgito inv·lida!!");
+        printf("\nVerifica√ß√£o do primeiro d√≠gito inv√°lida!! \n");
         return 0;
     }
     else if(resto == digitoverificador){
-        printf("\nValidaÁ„o do primeiro dÌgito concluÌda! ");
+        printf("\nValida√ß√£o do primeiro d√≠gito conclu√≠da! ");
+        return 1;
     }
 }
 
-    //FunÁ„o para validar o segundo dÌgito verificador
-void verificarsegundodig(char cpfnumerico[15])
+    //Fun√ß√£o para validar o segundo d√≠gito verificador
+int verificarsegundodig(char cpfnumerico[15])
 {
     int contagem;
     int soma = 0;
@@ -95,66 +97,93 @@ void verificarsegundodig(char cpfnumerico[15])
     int resto = 0;
     int digitoverificador;
 
-        //For Loop -> Realiza a soma seguindo a fÛrmula de validaÁ„o do dÌgito verificador
+        //For Loop -> Realiza a soma seguindo a f√≥rmula de valida√ß√£o do d√≠gito verificador
     for(contagem = 0; contagem < 10; contagem++){
         soma += charparaint(cpfnumerico[contagem]) * fatorial;
         fatorial--;
     }
-    printf("\nA soma total dos 10 dÌgitos deu %i", soma);
+    printf("\nA soma total dos 10 d√≠gitos deu %i", soma);
 
     resto = (soma * 10) % 11;
 
     printf("\nE o resto dessa mesma soma deu %i", resto);
 
-    digitoverificador = charparaint(cpfnumerico[10]);//Converte o dÌgito verificador para inteiro e armazena em outra vari·vel
+    digitoverificador = charparaint(cpfnumerico[10]);//Converte o d√≠gito verificador para inteiro e armazena em outra vari√°vel
 
-        //Segue a fÛrmula de validaÁ„o
-        //Caso o resto seja diferente do dÌgito verificador, È dado como CPF inv·lido e o programa interrompido
-        //Sen„o, a validaÁ„o È feita com sucesso
+        //Segue a f√≥rmula de valida√ß√£o
+        //Caso o resto seja diferente do d√≠gito verificador, √© dado como CPF inv√°lido e o programa interrompido
+        //Sen√£o, a valida√ß√£o √© feita com sucesso
     if(resto != digitoverificador){
-        printf("\nVerificaÁ„o do segundo dÌgito inv·lida!!");
+        printf("\nVerifica√ß√£o do segundo d√≠gito inv√°lida!! \n");
         return 0;
     }
     else if(resto == digitoverificador)
-        printf("\nValidaÁ„o do segundo dÌgito concluÌda! ");
+        printf("\nValida√ß√£o do segundo d√≠gito conclu√≠da! ");
+        return 1;
 }
 
-    //FunÁ„o Principal
+    //Fun√ß√£o para verificar se o CPF inserido possui todos os d√≠gitos iguais
+int verificardigiguais(char cpfnumerico[15])
+{
+    if(charparaint(cpfnumerico[0]) == charparaint(cpfnumerico[1]) &&
+       charparaint(cpfnumerico[1]) == charparaint(cpfnumerico[2]) &&
+       charparaint(cpfnumerico[2]) == charparaint(cpfnumerico[3]) &&
+       charparaint(cpfnumerico[3]) == charparaint(cpfnumerico[4]) &&
+       charparaint(cpfnumerico[4]) == charparaint(cpfnumerico[5]) &&
+       charparaint(cpfnumerico[5]) == charparaint(cpfnumerico[6]) &&
+       charparaint(cpfnumerico[6]) == charparaint(cpfnumerico[7]) &&
+       charparaint(cpfnumerico[7]) == charparaint(cpfnumerico[8]) &&
+       charparaint(cpfnumerico[8]) == charparaint(cpfnumerico[9])){
+        printf("\nO CPF inserido √© inv√°lido, possui d√≠gitos iguais! \n");
+        return 0;
+       }
+
+}
+
+    //Fun√ß√£o Principal
 main()
 {
-    char cpf[15]; //CPF oferecido pelo usu·rio
-    char cpfnumerico[15]; //CPF somente n˙mero
+    char cpf[15]; //CPF oferecido pelo usu√°rio
+    char cpfnumerico[15]; //CPF somente n√∫mero
+    char validadedocpf;
 
-    //Possibilita escrever acentos e grafias da lÌngua portuguesa na tela
+    //Possibilita escrever acentos e grafias da l√≠ngua portuguesa na tela
     setlocale(LC_ALL, "Portuguese");
 
-    printf("Bem-vindo(a) ao Sistema de ValidaÁ„o de CPF UFCAT! \n\n");
-    printf("Digite aqui seu CPF para verificarmos sua validaÁ„o: ");
+    printf("Bem-vindo(a) ao Sistema de Valida√ß√£o de CPF UFCAT! \n\n");
+    printf("Digite aqui seu CPF para verificarmos sua valida√ß√£o: ");
     scanf("%s", cpf);
 
-    printf("\n\nAqui est· seu CPF: %s", cpf);
+    printf("\n\nAqui est√° seu CPF: %s", cpf);
 
-    //FunÁ„o para retirar caracteres n„o-numÈricos do CPF
+    //Fun√ß√£o para retirar caracteres n√£o-num√©ricos do CPF
     retirarnumcpf(cpf, cpfnumerico);
 
-    printf("\nAgora aqui est· o CPF numÈrico: %s", cpfnumerico);
+    printf("\nAgora aqui est√° o CPF num√©rico: %s", cpfnumerico);
 
-    //FunÁ„o para verificar se o CPF possui 11 dÌgitos
-    verificardig(cpfnumerico);
+    //Fun√ß√£o para verificar se o CPF inserido possui todos os d√≠gitos iguais
+    if(!verificardigiguais(cpfnumerico))
+        return 0;   //Se o CPF n√£o passar dessa verifica√ß√£o, o programa √© encerrado aqui
 
-    printf("\n\nProsseguimos agora com a verificaÁ„o do primeiro dÌgito!");
+    //Fun√ß√£o para verificar se o CPF possui 11 d√≠gitos
+    if(!verificardig(cpfnumerico))
+        return 0;   //Se o CPF n√£o passar dessa verifica√ß√£o, o programa √© encerrado aqui
 
-    //FunÁ„o para validar o primeiro dÌgito verificador do CPF
-    verificarprimeirodig(cpfnumerico);
+    printf("\n\nProsseguimos agora com a verifica√ß√£o do primeiro d√≠gito!");
 
-    printf("\n\nFinalmente vamos agora para a verificaÁ„o do segundo dÌgito!");
+    //Fun√ß√£o para validar o primeiro d√≠gito verificador do CPF
+    if(!verificarprimeirodig(cpfnumerico))
+        return 0;   //Se o CPF n√£o passar dessa verifica√ß√£o, o programa √© encerrado aqui
 
-    //FunÁ„o para validar o segundo dÌgito verificador do CPF
-    verificarsegundodig(cpfnumerico);
+    printf("\n\nFinalmente vamos agora para a verifica√ß√£o do segundo d√≠gito!");
 
-        //Caso todas as verificaÁıes sejam validadas, o CPF inserido È valido
+    //Fun√ß√£o para validar o segundo d√≠gito verificador do CPF
+    if(!verificarsegundodig(cpfnumerico))
+        return 0;   //Se o CPF n√£o passar dessa verifica√ß√£o, o programa √© encerrado aqui
+
+        //Caso todas as verifica√ß√µes sejam validadas, o CPF inserido √© valido
     if(verificardig && verificarprimeirodig && verificarsegundodig){
-        printf("\n\nO CPF inserido È v·lido!!\n");
+        printf("\n\nO CPF inserido √© v√°lido!!\n");
     }
 
     return 0;
